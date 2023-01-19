@@ -37,7 +37,10 @@ jobs:
         compiler:
           # you can specify the version after `-` like "llvm-13.0.0".
           - llvm-13.0.0
+          - llvm-14.0.0
+          - llvm-15.0.6
           - gcc-11
+          - gcc-12
         generator:
           - "Ninja Multi-Config"
         build_type:
@@ -51,13 +54,21 @@ jobs:
           # mingw is determined by this author to be too buggy to support
           - os: windows-2019
             compiler: gcc-11
+          - os: windows-2019
+            compiler: gcc-12
 
         include:
           # Add appropriate variables for gcov version required. This will intentionally break
           # if you try to use a compiler that does not have gcov set
           - compiler: gcc-11
             gcov_executable: gcov
+          - compiler: gcc-12
+            gcov_executable: gcov
           - compiler: llvm-13.0.0
+            gcov_executable: "llvm-cov gcov"
+          - compiler: llvm-14.0.0
+            gcov_executable: "llvm-cov gcov"
+          - compiler: llvm-15.0.6
             gcov_executable: "llvm-cov gcov"
 
           # Set up preferred package generators, for given build configurations
